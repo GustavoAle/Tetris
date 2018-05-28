@@ -1,5 +1,12 @@
 #include "tetrismatrix.hpp"
-#include <GL/gl.h>
+
+// Graphics Libs
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+#else
+    #include <GT/gl.h>
+#endif
+
 #include <iostream>
 
 float TetrisMatrix::getGraphX()

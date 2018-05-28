@@ -2,7 +2,10 @@ TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
-LIBS += -lGL -lglfw -lm -ldrawtext -lpthread
+INCLUDEPATH += /usr/local/include
+DEPENDPATH += /usr/local/lib
+LIBS += -L/usr/local/lib
+LIBS +=-framework GLUT -framework OpenGL -lglfw -ldrawtext -lm -lpthread
 
 SOURCES += main.cpp \
     tetrismatrix.cpp \
@@ -12,7 +15,8 @@ SOURCES += main.cpp \
     tetrisgenerators.cpp \
     formations/lformation.cpp \
     formations/oformation.cpp \
-    formations/_formation.cpp
+    formations/_formation.cpp \
+    formations/sformation.cpp
 
 
 
@@ -25,4 +29,5 @@ HEADERS += \
     tetrisgenerators.hpp \
     formations/lformation.hpp \
     formations/oformation.hpp \
-    formations/_formation.hpp
+    formations/_formation.hpp \
+    formations/sformation.hpp

@@ -7,6 +7,8 @@
 #include "formations/lformation.hpp"
 #include "formations/oformation.hpp"
 #include "formations/_formation.hpp"
+#include "formations/sformation.hpp"
+
 
 TetrisFormation *generateFormation(TetrisMatrix* matrix, int x, int y);
 

@@ -4,8 +4,16 @@
 // CPP Libs
 #include <iostream>
 #include <thread>
+
 // Graphics Libs
-#include <GL/gl.h>
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    const char *fontlocation = "/System/Library/Fonts/Keyboard.ttf";
+#else
+    const char *fontlocation = "serif.ttf";
+    #include <GT/gl.h>
+#endif
+
 #include <GLFW/glfw3.h>
 #include <drawtext.h> // library repository -> https://github.com/jtsiomb/libdrawtext
 // My Project Libs
@@ -13,13 +21,30 @@
 #include "tetrismatrix.hpp"
 #include "tetristimer.hpp"
 #include "tetrisformation.hpp"
-#include "formations/tformation.hpp"
+
+    //#include "formations/tformation.hpp"
+
+/*
+#ifdef WINDOWS
+    #include <direct.h>
+    #define GetCurrentDir _getcwd
+#else
+    #include <unistd.h>
+    #define GetCurrentDir getcwd
+#endif
+
+std::string GetCurrentWorkingDir( void ) {
+  char buff[FILENAME_MAX];
+  GetCurrentDir( buff, FILENAME_MAX );
+  std::string current_working_dir(buff);
+  return current_working_dir;
+}
+*/
 
 using namespace std;
 
 //constants
 const int window_width = 340, window_height = 620;
-const char *fontlocation = "serif.ttf";
 
 //globals
 struct dtx_font *font;
@@ -364,6 +389,22 @@ void initWindow()
 
     glViewport(0,0,window_width,window_height);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    /*char fontlocation[1024];
+    int work = 0;
+    do{
+        cout << "Digite o path ate a fonte (ttf): " << endl;
+        cin >> fontlocation;
+        if(!(font = dtx_open_font(fontlocation, 24)))
+        {
+            cerr << "error : cannot load font" << endl;
+            //throw;
+        }else{
+            work = 1;
+        }
+    }while(!work);
+    */
+    cout << fontlocation << endl;
 
     if(!(font = dtx_open_font(fontlocation, 24)))
     {

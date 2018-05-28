@@ -1,5 +1,12 @@
 #include "tetrisformation.hpp"
-#include <GL/gl.h>
+
+
+// Graphics Libs
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+#else
+    #include <GT/gl.h>
+#endif
 
 void TetrisFormation::addPoint(int x, int y)
 {

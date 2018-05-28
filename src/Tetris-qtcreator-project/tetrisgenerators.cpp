@@ -2,7 +2,7 @@
 #include "tetristimer.hpp"
 #include <stdlib.h>
 
-#define FORMATS_QUANTITY 4
+#define FORMATS_QUANTITY 5
 
 float getMinor(float red, float green, float blue)
 {
@@ -61,7 +61,11 @@ TetrisFormation *generateFormation(TetrisMatrix *matrix, int x, int y)
             formation = new _Formation(matrix, x, y);
             break;
         }
-
+        case 4:
+        {
+            formation = new SFormation(matrix, x, y);
+            break;
+        }
         default:
         {
             formation = new OFormation(matrix, x, y);
