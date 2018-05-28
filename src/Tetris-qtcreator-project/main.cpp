@@ -136,6 +136,7 @@ int main()
                 current_formation->drop();
                 delete current_formation;
                 current_formation = nullptr;
+                matrix.promptfullRows();
             }
         }
 

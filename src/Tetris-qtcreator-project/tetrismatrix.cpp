@@ -147,3 +147,80 @@ void TetrisMatrix::render()
             }
         }
 }
+
+//alterations by Gustavo Ale
+bool TetrisMatrix::isrowFull(int nrow)
+{
+
+    for(int x = 0; x < TetrisMatrix::width; x++)
+    {
+        if(blocks[x][nrow].empty)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool TetrisMatrix::isrowEmpty(int nrow)
+{
+
+    for(int x = 0; x < TetrisMatrix::width; x++)
+    {
+        if(!blocks[x][nrow].empty)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void TetrisMatrix::promptfullRows(void)
+{
+    int fullrows = 0;
+    for(int y = 0 ; y < TetrisMatrix::height; y++ )
+    {
+        if(TetrisMatrix::isrowFull(y))
+        {
+               std::cout << "Row: " << y << "is full" << std::endl;
+               TetrisMatrix::removeRow(y);
+               fullrows++;
+        }
+    }
+    if(fullrows >= 4)
+    {
+        std::cout << "Tetris!!!" << std::endl;
+        //score
+    }
+}
+
+void TetrisMatrix::dropRow(int nrow)
+{
+    if(TetrisMatrix::isrowEmpty(nrow+1))
+    {
+        for(int x = 0; x < TetrisMatrix::width; x++)
+        {
+            blocks[x][nrow+1].red   =   blocks[x][nrow].red;
+            blocks[x][nrow+1].green =   blocks[x][nrow].green;
+            blocks[x][nrow+1].blue  =   blocks[x][nrow].blue;
+            blocks[x][nrow+1].empty =   blocks[x][nrow].empty;
+
+            blocks[x][nrow].empty = true;
+        }
+    }
+
+}
+void TetrisMatrix::removeRow(int nrow)
+{
+    for(int x = 0; x < TetrisMatrix::width; x++)
+    {
+        TetrisMatrix::removeBlock(x,nrow);
+    }
+    for(int y = nrow - 1; y >= 0; y --)
+    {
+        TetrisMatrix::dropRow(y);
+    }
+}
+
+
+//end of Gustavo Ale alterations
