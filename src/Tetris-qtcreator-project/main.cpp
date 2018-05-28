@@ -44,7 +44,7 @@ std::string GetCurrentWorkingDir( void ) {
 using namespace std;
 
 //constants
-const int window_width = 340, window_height = 620;
+const int window_width = 510, window_height = 620;
 
 //globals
 struct dtx_font *font;
@@ -84,7 +84,7 @@ int main()
 
 
 
-    matrix.defineRenderArea( 10 , 10 , window_width - 20 , window_height - 20);
+    matrix.defineRenderArea( 10 , 10 , window_width - 190 , window_height - 20);
     matrix.clear();
 
     countdown(5);
@@ -167,7 +167,8 @@ int main()
 void printHelp()
 {
     cout << "T E T R I S" << endl
-         << "by Filipe Chagas" << endl
+         << "created by Filipe Chagas (https://github.com/FilipeChagasDev)" << endl
+         << "`coldfries` updates by Gustavo Ale (https://github.com/GustavoAle)" << endl
          << "   Keyboard commands:" << endl
          << "   arrows : move" << endl
          << "   enter : clockwise rotation" << endl
@@ -338,7 +339,7 @@ void countdown(int seconds)
             matrix.render();
 
             glPushMatrix();
-                glTranslatef(70, 300, 0);
+                glTranslatef(70, 350, 0);
                 glRotatef(180, 1, 0, 0);
                 glColor3f(1, 1, 1);
                 sprintf(str,"Countdown - %d",countdown_time);
@@ -355,7 +356,13 @@ void countdown(int seconds)
                 glScalef(1/1.5,1/1.5,0);
                 glTranslatef( 0 , -50 ,0);
                 dtx_string("By Filipe Chagas");
-            glPopMatrix();
+
+                glScalef(1/1.5,1/1.5,0);
+                glTranslatef( 0 , -50 ,0);
+                dtx_string("*coldfries* by Gustavo Ale");
+
+
+                glPopMatrix();
 
             glfwSwapBuffers(window);
 
