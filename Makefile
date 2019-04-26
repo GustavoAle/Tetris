@@ -19,3 +19,6 @@ main:
 
 run: main
 	./tetris.elf
+
+debug:
+	g++ -ggdb $(LPARAM) $(IPARAM) $(SOURCE) $(LIBS) -o tetris.elf -std=c++11

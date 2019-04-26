@@ -38,7 +38,7 @@ public:
     bool isrowEmpty(int nrow);
     bool isrowFull(int nrow);
 
-    void promptfullRows();
+    int promptfullRows();
 
     void removeRow(int nrow);
     void dropRow(int nrow);

@@ -186,7 +186,7 @@ bool TetrisMatrix::isrowEmpty(int nrow)
     return true;
 }
 
-void TetrisMatrix::promptfullRows(void)
+int TetrisMatrix::promptfullRows(void)
 {
     int fullrows = 0;
     for(int y = 0 ; y < TetrisMatrix::height; y++ )
@@ -208,6 +208,7 @@ void TetrisMatrix::promptfullRows(void)
     {
         tetris_score += fullrows;
     }
+    return fullrows;
 }
 
 void TetrisMatrix::dropRow(int nrow)

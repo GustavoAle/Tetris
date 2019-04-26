@@ -40,6 +40,9 @@ uintmax_t TetrisTimer::getElapsedUseconds()
 void TetrisTimer::setEveryInterval(uintmax_t interval)
 {
     update();
+    
+    if(interval == 0) interval = 1; //leads to segmentation fault if interval == 0.
+
     my_every_interval = interval;
     next_every_activation = elapsed_time + my_every_interval;
 }

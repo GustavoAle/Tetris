@@ -268,7 +268,14 @@ void playGame()
                 current_formation->drop();
                 delete current_formation;
                 current_formation = nullptr;
-                matrix.promptfullRows();
+                int newScore = matrix.promptfullRows();
+
+                if(newScore < 4 && newScore > 0){
+                    AutoMoveTimer.setEveryInterval((uintmax_t)(AutoMoveTimer.getEveryInterval() * 0.9));
+                }else if(newScore >= 4){
+                    AutoMoveTimer.setEveryInterval((uintmax_t)(AutoMoveTimer.getEveryInterval() * 0.8));
+                }
+
             }
             current_formation_mutex.unlock();
         }
