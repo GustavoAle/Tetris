@@ -5,11 +5,7 @@
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
 #else
-<<<<<<< HEAD:src/Tetris-qtcreator-project/tetrisformation.cpp
-    #include <GT/gl.h>
-=======
     #include <GL/gl.h>
->>>>>>> upstream/master:src/tetrisformation.cpp
 #endif
 
 void TetrisFormation::addPoint(int x, int y)

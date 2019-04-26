@@ -97,11 +97,12 @@ void printHelp()
 {
     cout << "T E T R I S" << endl
          << "created by Filipe Chagas (https://github.com/FilipeChagasDev)" << endl
-         << "`coldfries` updates by Gustavo Ale (https://github.com/GustavoAle)" << endl
+         << "`tuna pate` updates by Gustavo Ale (https://github.com/GustavoAle)" << endl
          << "   Keyboard commands:" << endl
          << "   left & right arrows : move" << endl
          << "   up arrow : flip (clockwise rotation)" << endl
-         << "   space : pause" << endl;
+         << "   space : drop" << endl
+         << "   esc : pause" << endl;
 }
 
 void initWindow()
@@ -177,6 +178,20 @@ void renderAll()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     renderBackground(0,0,0);
+
+/*
+    //Teste 
+
+    glPushMatrix();
+    glTranslatef(   matrix.getGraphX() + 10*,
+                    matrix.getGraphY() + 10*, 0); //translate matrix to where this block will be drawn
+    matrix.renderSquare(10, 10, 128, 128, 128);
+    glPopMatrix();
+
+    //Fim teste 
+
+*/
+
     matrix.render();
     current_formation->render();
     renderInfo();
@@ -282,6 +297,7 @@ bool left_key_last_state;
 bool down_key_last_state;
 bool up_key_last_state;
 bool space_key_last_state;
+bool esc_key_last_state;
 
 void KeyboardEvents()
 {
@@ -290,10 +306,11 @@ void KeyboardEvents()
     if(current_formation != nullptr)
     {
         int right_key_state = glfwGetKey(window, GLFW_KEY_RIGHT);
-        int left_key_state = glfwGetKey(window, GLFW_KEY_LEFT);
-        int down_key_state = glfwGetKey(window, GLFW_KEY_DOWN);
-        int up_key_state = glfwGetKey(window, GLFW_KEY_UP);
+        int left_key_state  = glfwGetKey(window, GLFW_KEY_LEFT);
+        int down_key_state  = glfwGetKey(window, GLFW_KEY_DOWN);
+        int up_key_state    = glfwGetKey(window, GLFW_KEY_UP);
         int space_key_state = glfwGetKey(window, GLFW_KEY_SPACE);
+        int esc_key_state   = glfwGetKey(window, GLFW_KEY_ESCAPE);
         int shift_key_state = glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT);
 
         // ---------------- RIGHT KEY ------------------
@@ -457,7 +474,15 @@ void KeyboardEvents()
         {
             if(space_key_last_state == false)
             {
-                pauseGame();
+                if(!game_paused)
+                {
+                    current_formation_mutex.lock();
+                    while(current_formation->moveDown());
+                    current_formation_mutex.unlock();
+
+                    renderAll();
+                }
+
                 space_key_last_state = true;
 
             }
@@ -470,6 +495,26 @@ void KeyboardEvents()
             }
         }
         // ----------------------------------------------
+
+
+        // --------------- ESCAPE KEY ---------------------
+        if(esc_key_state == GLFW_PRESS )
+        {
+            if(esc_key_last_state == false)
+            {
+                pauseGame();
+                esc_key_last_state = true;
+            }
+        }
+        else
+        {
+            if(esc_key_last_state == true)
+            {
+                esc_key_last_state = false;
+            }
+        }
+        // ----------------------------------------------
+
 
 
     }
@@ -489,7 +534,7 @@ void homeScreen(int seconds)
         if(timer.every())
         {
             glClear(GL_COLOR_BUFFER_BIT);
-            matrix.render();
+            //matrix.render();
 
             glPushMatrix();
                 glTranslatef(150, 350, 0);
@@ -512,7 +557,7 @@ void homeScreen(int seconds)
 
                 glScalef(1/1.5,1/1.5,0);
                 glTranslatef( 0 , -50 ,0);
-                dtx_string("*coldfries* by Gustavo Ale");
+                dtx_string("*tuna pate* by Gustavo Ale");
             glPopMatrix();
 
             glfwSwapBuffers(window);

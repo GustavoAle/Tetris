@@ -4,11 +4,7 @@
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
 #else
-<<<<<<< HEAD:src/Tetris-qtcreator-project/tetrismatrix.cpp
-    #include <GT/gl.h>
-=======
     #include <GL/gl.h>
->>>>>>> upstream/master:src/tetrismatrix.cpp
 #endif
 
 #include <iostream>
@@ -152,6 +148,12 @@ void TetrisMatrix::render()
                 glTranslatef(graph_x + x*block_width,
                              graph_y + y*block_height, 0); //translate matrix to where this block will be drawn
                 renderSquare(block_width, block_height, current_red, current_green, current_blue);
+                glPopMatrix();
+            }else{
+                glPushMatrix();
+                glTranslatef(graph_x + x*block_width,
+                             graph_y + y*block_height, 0); //translate matrix to where this block will be drawn
+                renderSquare(block_width, block_height, 0.05, 0.05, 0.05);
                 glPopMatrix();
             }
         }
