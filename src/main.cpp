@@ -33,6 +33,7 @@ const int window_width = 510, window_height = 620;
 //globals
 struct dtx_font *font;
 GLFWwindow *window;
+int currentHighscore;
 
 TetrisMatrix matrix;
 
@@ -60,6 +61,12 @@ void renderAll();
 void playGame();
 bool gameOver();
 
+typedef struct {
+    uint64_t    timestamp; 
+    int         score;
+} score_t ;
+
+
 /* -----------------------------------------------------------------------------------
    ------------------------------ MAIN FUNCTION --------------------------------------
    ----------------------------------------------------------------------------------- */
@@ -67,6 +74,16 @@ bool gameOver();
 int main()
 {
     render_interruption_semaphore = false;
+    currentHighscore = 0;
+    
+    FILE *fhighscore = fopen("data.dat","rb");
+    if(fhighscore != NULL){
+        score_t aux;
+        fseek(fhighscore,0,SEEK_SET);
+        fread(&aux,sizeof(score_t),1,fhighscore);
+        currentHighscore = aux.score;
+        fclose(fhighscore);
+    }
 
     glfwInit(); //initializing glfw
     printHelp();
@@ -160,7 +177,7 @@ void renderInfo()
         glColor3f(1,1,1);
         glTranslatef(360,50,0);
         glRotatef(180,1,0,0);
-        dtx_string("next:");
+        dtx_string("Next:");
     glPopMatrix();
     getNextFormation()->renderSample(390,120);
 
@@ -171,6 +188,15 @@ void renderInfo()
         char str_score[50];
         sprintf(str_score, "Score: %d", matrix.getTetrisScore());
         dtx_string(str_score);
+
+        char str_highscore[50];
+        sprintf(str_highscore, "Highscore: %d",currentHighscore);
+
+        glTranslatef(0,-30,0);
+        glScalef(1/1.75,1/1.75,0);
+        //glRotatef(180,1,0,0);
+
+        dtx_string(str_highscore);
     glPopMatrix();
 }
 
@@ -577,6 +603,22 @@ void homeScreen(int seconds)
 
 bool gameOver()
 {
+    
+    if(currentHighscore < matrix.getTetrisScore()){
+        FILE *fhighscore = fopen("data.dat","w+b");
+        if(fhighscore != NULL){
+
+            score_t aux;
+
+            aux.timestamp = 0;
+            aux.score =  matrix.getTetrisScore();
+
+            fwrite(&aux,sizeof(score_t),1,fhighscore);
+
+            fclose(fhighscore);
+        }
+    }
+
     cout << "GAME OVER" << endl << "do you want to restart? [y/n]" << endl;
     char feedback;
     while (1)

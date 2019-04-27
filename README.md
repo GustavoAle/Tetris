@@ -1,6 +1,6 @@
 # Tetris
 This is a Tetris game developed with C++ and classic OpenGL
-![Tuna pate update Apr. 2019](screenshots/tunapate.gif)
+![Tuna pate update Apr. 2019](screenshots/tunapate.gif | width=300)
 
 ## Author Notes:
 The code files are in the "src" directory.
